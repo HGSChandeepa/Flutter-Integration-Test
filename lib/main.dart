@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:integration_tester/samples/example02/color_screen.dart';
+import 'package:integration_tester/samples/example03/screens/movies_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ColorScreen(),
+      home: MovieScreen(),
     );
   }
 }
