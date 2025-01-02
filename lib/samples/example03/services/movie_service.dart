@@ -4,7 +4,7 @@ import 'package:integration_tester/samples/example03/models/movie.dart';
 
 class MovieService {
   static const baseUrl = 'https://api.themoviedb.org/3';
-  static const apiKey = '3fc8eb21e52fa176999b3a9b7851d167';
+  static const apiKey = 'API_KEY';
 
   Future<List<Movie>> getPopularMovies() async {
     final response =
