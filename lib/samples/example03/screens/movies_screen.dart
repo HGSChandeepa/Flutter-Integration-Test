@@ -3,37 +3,36 @@ import 'package:integration_tester/samples/example03/models/movie.dart';
 import 'package:integration_tester/samples/example03/services/movie_service.dart';
 
 class MovieScreen extends StatefulWidget {
-
-  
-  const MovieScreen({Key? key}) : super(key: key);
+  final MovieService movieService;
+  const MovieScreen({
+    super.key,
+    required this.movieService,
+  });
 
   @override
   State<MovieScreen> createState() => _MovieScreenState();
 }
 
 class _MovieScreenState extends State<MovieScreen> {
-  final MovieService _movieService;
+  late MovieService _movieService;
   List<Movie> _movies = [];
   bool _isLoading = true;
   String? _error;
 
-  _MovieScreenState({MovieService? movieService})
-      : _movieService = movieService ?? MovieService();
-
   @override
   void initState() {
     super.initState();
+    _movieService =
+        widget.movieService; // Ensure service is initialized correctly
     _loadMovies();
   }
 
   Future<void> _loadMovies() async {
     if (!mounted) return;
-
     try {
       setState(() => _isLoading = true);
       final movies = await _movieService.getPopularMovies();
       if (!mounted) return;
-
       setState(() {
         _movies = movies;
         _isLoading = false;
@@ -72,14 +71,12 @@ class _MovieScreenState extends State<MovieScreen> {
         child: CircularProgressIndicator(),
       );
     }
-
     if (_error != null) {
       return Center(
         key: const Key('error_message'),
         child: Text(_error!),
       );
     }
-
     return RefreshIndicator(
       onRefresh: _loadMovies,
       child: ListView.builder(
@@ -106,7 +103,7 @@ class _MovieScreenState extends State<MovieScreen> {
                   ),
                 ),
                 ListTile(
-                  key: Key('movie_${movie.id}'),
+                  key: Key('movie${movie.id}'),
                   title: Text(movie.title),
                   subtitle: Text(movie.overview),
                   trailing: Text('★ ${movie.rating.toStringAsFixed(1)}'),
